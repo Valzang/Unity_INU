@@ -11,7 +11,7 @@ namespace _0.Scripts.Dodge
         private AsyncOperation _sceneLoadAsync = null;
         private void Start()
         {
-            _sceneLoadAsync = SceneManager.LoadSceneAsync("2.MainScene");
+            _sceneLoadAsync = SceneManager.LoadSceneAsync("2.DodgeMain");
             _sceneLoadAsync.allowSceneActivation = false;
             SoundManager.Instance.PlayBGM("TitleBgm");
         }
