@@ -1,10 +1,12 @@
 ﻿using _0.Scripts.Utility;
-using UnityEngine.Pool;
 
 namespace _0.Scripts.Dodge
 {
-    public class BulletPool : ObjectPooler<BulletPool>
+    public class BulletPool : ObjectPooler<Bullet>
     {
-        
+        public void SetLimitCount(int bulletMaxCount)
+        {
+            _limitCount = (uint)bulletMaxCount;
+        }
     }
 }
