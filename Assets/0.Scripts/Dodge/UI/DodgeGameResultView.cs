@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using _0.Scripts.Utility;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +39,7 @@ namespace _0.Scripts.Dodge.UI
 
         public void ShowGameOver(float gamePlayTime)
         {
+            SoundManager.Instance.PlayBGM("GameOver");
             _playTime.text = $"{gamePlayTime:F2}초";
         }
     }

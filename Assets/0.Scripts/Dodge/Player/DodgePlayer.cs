@@ -1,7 +1,8 @@
 using _0.Scripts.Dodge;
+using _0.Scripts.Utility;
 using UnityEngine;
 
-public class DodgePlayer : _0.Scripts.Utility.Singleton<DodgePlayer>
+public class DodgePlayer : Singleton<DodgePlayer>
 {
     [Header("리지드바디")] [SerializeField] private Rigidbody2D _rigidbody;
     [Header("플레이어 체력")] [SerializeField] [Range(1, 100)] private int _startHp;
@@ -20,6 +21,7 @@ public class DodgePlayer : _0.Scripts.Utility.Singleton<DodgePlayer>
     public void GetDamage(int damage)
     {
         _healthPoint -= damage;
+        SoundManager.Instance.PlayEffect("Hit");
         if (_healthPoint <= 0)
         {
             DodgeGameManager.Instance.GameOver();

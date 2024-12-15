@@ -42,8 +42,13 @@ namespace _0.Scripts.Dodge
         public void Initialize()
         {
             Time.timeScale = 1f;
+            SoundManager.Instance.PlayBGM("MainBgm");
             StopAllCoroutines();
-            DodgePlayer.Instance.transform.position = default;
+            if (DodgePlayer.Instance != null)
+            {
+                DodgePlayer.Instance.transform.position = default;
+            }
+                
             _isStartGame = false;
             _isGameStopped = false;
             GamePlayTime = 0f;
