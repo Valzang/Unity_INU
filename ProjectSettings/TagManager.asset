@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Bullet
+  - Player
+  - Obstacle
   - 
   - 
   - 
@@ -40,4 +40,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3500946173
+    locked: 0
+  - name: Enemy
+    uniqueID: 394072929
+    locked: 0
+  - name: Player
+    uniqueID: 2583460193
+    locked: 0
+  - name: Bullet
+    uniqueID: 4185612509
+    locked: 0
+  - name: UI
+    uniqueID: 232468873
+    locked: 0
+  - name: OverlayUI
+    uniqueID: 1704021671
     locked: 0
