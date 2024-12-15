@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4161150690690789520
+--- !u!1 &8487562299117142968
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3402201490970949148}
-  - component: {fileID: 4132468831483586378}
+  - component: {fileID: 5139151058842804382}
+  - component: {fileID: 7426820250618523442}
   m_Layer: 0
   m_Name: BulletPools
   m_TagString: Untagged
@@ -17,13 +17,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &3402201490970949148
-RectTransform:
+--- !u!4 &5139151058842804382
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4161150690690789520}
+  m_GameObject: {fileID: 8487562299117142968}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,18 +32,13 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4132468831483586378
+--- !u!114 &7426820250618523442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4161150690690789520}
+  m_GameObject: {fileID: 8487562299117142968}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9776c2d3ae774824b9c6460e5663f7db, type: 3}
@@ -50,5 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   needToDestroy: 1
   _prefab: {fileID: 6311229459520846682, guid: 15caab17f040514458c77ddca2bb4705, type: 3}
-  _parent: {fileID: 3402201490970949148}
-  _limitCount: 100
+  _parent: {fileID: 5139151058842804382}

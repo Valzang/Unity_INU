@@ -8,10 +8,12 @@ public class DodgePlayer : _0.Scripts.Utility.Singleton<DodgePlayer>
     [Header("플레이어 이동속도")] [SerializeField] [Range(1, 100)] private float _speed;
 
     private int _healthPoint = 1;
+    private Camera _mainCamera = null;
 
     protected override void Awake()
     {
         base.Awake();
+        _mainCamera ??= Camera.main;
         _healthPoint = _startHp;
     }
 
@@ -55,6 +57,37 @@ public class DodgePlayer : _0.Scripts.Utility.Singleton<DodgePlayer>
 
         if (!isMoveVertical && !isMoveHorizontal)
         {
+            return;
+        }
+
+        var viewportPoint = _mainCamera.WorldToViewportPoint(_rigidbody.position);
+
+        bool needToReset = false;
+        
+        if (viewportPoint.x < 0.01f)
+        {
+            viewportPoint.x = 0.01f;
+            needToReset = true;
+        }
+        if (viewportPoint.x > 0.99f)
+        {
+            viewportPoint.x = 0.99f;
+            needToReset = true;
+        }
+        if (viewportPoint.y < 0.01f)
+        {
+            viewportPoint.y = 0.01f;
+            needToReset = true;
+        }
+        if (viewportPoint.y > 0.99f)
+        {
+            viewportPoint.y = 0.99f;
+            needToReset = true;
+        }
+
+        if (needToReset)
+        {
+            _rigidbody.position = _mainCamera.ViewportToWorldPoint(viewportPoint);
             return;
         }
 

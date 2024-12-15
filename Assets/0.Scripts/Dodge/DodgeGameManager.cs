@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using _0.Scripts.Dodge.UI;
 using _0.Scripts.Utility;
 using TMPro;
@@ -14,7 +15,7 @@ namespace _0.Scripts.Dodge
         [Header("게임 결과")] [SerializeField] private DodgeGameResultView _resultView;
 
         [Header("총알 관련 ==============================")]
-        [Header("총알 시작 위치")] [SerializeField] private RectTransform[] _bulletArea;
+        [Header("총알 시작 위치")] [SerializeField] private Transform[] _bulletArea;
         [Header("총알 오브젝트 풀러")] [SerializeField] private BulletPool _bulletPooler;
         [Header("시작 총알 수")] [SerializeField] [Range(10, 5000)] private int _bulletStartCount = 10;
         [Header("최대 총알 수")] [SerializeField] [Range(10, 5000)] private int _bulletMaxCount = 300;
@@ -26,16 +27,23 @@ namespace _0.Scripts.Dodge
         private bool _isGameStopped = false;
         private int _bulletCurrentCount = 0;
 
+        private float _screenHalfWidth = 0f;
+        private float _screenHalfHeight = 0f;
+
         protected override void Awake()
         {
             base.Awake();
             Initialize();
+
+            _screenHalfWidth = (_bulletArea.Max(x => x.position.x) - _bulletArea.Min(x => x.position.x)) * 0.5f;
+            _screenHalfHeight = (_bulletArea.Max(x => x.position.y) - _bulletArea.Min(x => x.position.y)) * 0.5f;
         }
 
         public void Initialize()
         {
             Time.timeScale = 1f;
             StopAllCoroutines();
+            DodgePlayer.Instance.transform.position = default;
             _isStartGame = false;
             _isGameStopped = false;
             GamePlayTime = 0f;
@@ -94,18 +102,15 @@ namespace _0.Scripts.Dodge
             index = Random.Range(0, 4);
             var targetArea = _bulletArea[index];
             var nextStartPosition = (Vector2)targetArea.position;
-
-            if (!targetArea.TryGetComponent<BoxCollider2D>(out var boxCollider2D))
+            
+            if (index % 2 == 0)
             {
-                return default;
+                nextStartPosition.x += Random.Range(-_screenHalfWidth, _screenHalfWidth);
             }
-
-            var sizeDelta = boxCollider2D.bounds.size;
-            var halfWidth = sizeDelta.x * 0.5f;
-            var halfHeight = sizeDelta.y * 0.5f;
-
-            nextStartPosition.x += Random.Range(-halfWidth, halfWidth);
-            nextStartPosition.y += Random.Range(-halfHeight, halfHeight);
+            else
+            {
+                nextStartPosition.y += Random.Range(-_screenHalfHeight, _screenHalfHeight);
+            }
 
             return nextStartPosition;
         }
@@ -120,18 +125,15 @@ namespace _0.Scripts.Dodge
             var targetArea = _bulletArea[startIndex];
             var nextEndPosition = (Vector2)(targetArea.position);
             
-            if (!targetArea.TryGetComponent<BoxCollider2D>(out var boxCollider2D))
+            if (startIndex % 2 == 0)
             {
-                return default;
+                nextEndPosition.x += Random.Range(-_screenHalfWidth, _screenHalfWidth);
             }
-
-            var sizeDelta = boxCollider2D.bounds.size;
-            var halfWidth = sizeDelta.x * 0.5f;
-            var halfHeight = sizeDelta.y * 0.5f;
-
-            nextEndPosition.x += Random.Range(-halfWidth, halfWidth);
-            nextEndPosition.y += Random.Range(-halfHeight, halfHeight);
-
+            else
+            {
+                nextEndPosition.y += Random.Range(-_screenHalfHeight, _screenHalfHeight);
+            }
+            
             return nextEndPosition;
         }
 
