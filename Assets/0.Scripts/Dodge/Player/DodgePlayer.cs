@@ -18,14 +18,17 @@ public class DodgePlayer : Singleton<DodgePlayer>
         _healthPoint = _startHp;
     }
 
-    public void GetDamage(int damage)
+    public bool GetDamage(int damage)
     {
         _healthPoint -= damage;
         SoundManager.Instance.PlayEffect("Hit");
         if (_healthPoint <= 0)
         {
             DodgeGameManager.Instance.GameOver();
+            return true;
         }
+
+        return false;
     }
 
     private float _horizontalValue;

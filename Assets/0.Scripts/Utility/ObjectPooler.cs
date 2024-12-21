@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace _0.Scripts.Utility
 {
-    public abstract class ObjectPooler<T> : Singleton<T> where T : MonoBehaviour
+    public abstract class ObjectPooler<T> : Singleton<ObjectPooler<T>> where T : MonoBehaviour
     {
-        [Header("프리팹")] [SerializeField] private T _prefab;
-        [Header("생성될 상위 부모")] [SerializeField] private Transform _parent;
+        [Header("프리팹")] [SerializeField] protected T _prefab;
+        [Header("생성될 상위 부모")] [SerializeField] protected Transform _parent;
         //[Header("생성 한계수")] [SerializeField] [Range(2, 50000)] 
         protected uint _limitCount;
 
