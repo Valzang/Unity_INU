@@ -76,8 +76,6 @@ namespace _0.Scripts.Dodge
             StartCoroutine(nameof(CreateBulletCoroutine));
         }
 
-        
-
         private void Update()
         {
             if (!_isStartGame) return;

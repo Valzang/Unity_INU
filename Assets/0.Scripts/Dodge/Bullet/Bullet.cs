@@ -1,20 +1,19 @@
-﻿using _0.Scripts.Dodge.UI;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _0.Scripts.Dodge
 {
-    public class Bullet : MonoBehaviour
+    public abstract class Bullet : MonoBehaviour
     {
-        private Vector2 _endPosition;
-        private float _speed;
-        
+        protected Vector2 _endPosition;
+        protected float _speed;
+
         /// <summary>
         /// 총알 초기화해주는 함수
         /// </summary>
         /// <param name="startPos"></param>
         /// <param name="endPos"></param>
         /// <param name="speed"></param>
-        public void Init(Vector2 startPos, Vector2 endPos, float speed)
+        public virtual void Init(Vector2 startPos, Vector2 endPos, float speed)
         {
             transform.position = startPos;
             _endPosition = endPos;
@@ -22,7 +21,7 @@ namespace _0.Scripts.Dodge
             gameObject.SetActive(true);
         }
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             var prevPos = (Vector2)transform.position;
             if (Vector2.SqrMagnitude(_endPosition-prevPos) <= 0.01f)
@@ -34,10 +33,15 @@ namespace _0.Scripts.Dodge
             transform.position = Vector2.MoveTowards(prevPos, _endPosition, _speed * Time.fixedDeltaTime);
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        protected virtual void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.TryGetComponent<DodgePlayer>(out var player)) return;
-            player.GetDamage(1);
+            if(player.GetDamage(1))
+                BulletPool.Instance.ReleaseItem(this);
+            else
+            {
+                DodgeGameManager.Instance.Recycle(this);
+            }
         }
     }
 }
