@@ -2,7 +2,7 @@
 
 namespace _0.Scripts.Dodge
 {
-    public class BulletPool : ObjectPooler<Bullet>
+    public abstract class BaseBulletPool : ObjectPooler<Bullet>
     {
         public void SetLimitCount(int bulletMaxCount)
         {

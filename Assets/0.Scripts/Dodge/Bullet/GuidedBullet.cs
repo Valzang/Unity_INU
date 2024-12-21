@@ -63,5 +63,16 @@ namespace _0.Scripts.Dodge
             var viewportPoint = _mainCamera.WorldToViewportPoint(nextPos);
             return viewportPoint is { x: >= 0f, y: >= 0f } and { x: <= 1f, y: <= 1f };
         }
+
+        protected override void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!other.TryGetComponent<DodgePlayer>(out var player)) return;
+            if(player.GetDamage(1))
+                GuidedBulletPool.Instance.ReleaseItem(this);
+            else
+            {
+                DodgeGameManager.Instance.Recycle(this);
+            }
+        }
     }
 }

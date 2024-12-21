@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8778642854604289228
+--- !u!1 &8487562299117142968
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4560130093167430187}
-  - component: {fileID: 7301691563381623416}
+  - component: {fileID: 5139151058842804382}
+  - component: {fileID: 7426820250618523442}
   m_Layer: 0
-  m_Name: DodgeGameManager
+  m_Name: NormalBulletPools
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4560130093167430187
+--- !u!4 &5139151058842804382
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8778642854604289228}
+  m_GameObject: {fileID: 8487562299117142968}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,30 +32,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7301691563381623416
+--- !u!114 &7426820250618523442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8778642854604289228}
+  m_GameObject: {fileID: 8487562299117142968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14352eb63008485e9625ca1dab939d81, type: 3}
+  m_Script: {fileID: 11500000, guid: 9776c2d3ae774824b9c6460e5663f7db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   needToDestroy: 1
-  _bulletCount: {fileID: 0}
-  _aliveTime: {fileID: 0}
-  _resultView: {fileID: 0}
-  _bulletArea:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _normalBulletPooler: {fileID: 0}
-  _guidedBulletPooler: {fileID: 0}
-  _bulletStartCount: 10
-  _bulletMaxCount: 300
-  _addBulletCoolTime: 5
-  _guidedBulletTime: 0
+  _prefab: {fileID: 4869416691409742758, guid: 15caab17f040514458c77ddca2bb4705, type: 3}
+  _parent: {fileID: 5139151058842804382}

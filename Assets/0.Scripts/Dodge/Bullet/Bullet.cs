@@ -33,15 +33,6 @@ namespace _0.Scripts.Dodge
             transform.position = Vector2.MoveTowards(prevPos, _endPosition, _speed * Time.fixedDeltaTime);
         }
 
-        protected virtual void OnTriggerEnter2D(Collider2D other)
-        {
-            if (!other.TryGetComponent<DodgePlayer>(out var player)) return;
-            if(player.GetDamage(1))
-                BulletPool.Instance.ReleaseItem(this);
-            else
-            {
-                DodgeGameManager.Instance.Recycle(this);
-            }
-        }
+        protected abstract void OnTriggerEnter2D(Collider2D other);
     }
 }
