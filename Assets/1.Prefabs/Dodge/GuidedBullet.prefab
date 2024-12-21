@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6688309306501993496}
   - component: {fileID: 7723080829999054801}
   - component: {fileID: 8257262932286486525}
-  - component: {fileID: 4869416691409742758}
+  - component: {fileID: 4803665838742266378}
   m_Layer: 6
-  m_Name: Bullet
+  m_Name: GuidedBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300014, guid: 8aeb9e233fbb8f14db39770841b78b94, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.02998209, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -98,10 +98,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 375
+    m_Bits: 119
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -121,7 +121,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.045
---- !u!114 &4869416691409742758
+--- !u!114 &4803665838742266378
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,6 +130,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2262973760515500662}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b163253005f4b2d92f870caeb433d80, type: 3}
+  m_Script: {fileID: 11500000, guid: e7f6ab2da04d4f5ab7512c2e6eed5dfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rotationSpeed: 1
