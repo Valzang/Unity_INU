@@ -9,8 +9,16 @@ namespace _0.Scripts.SuperMario
         [Header("시작 위치")] [SerializeField] private Transform _startPoint;
         [Header("마리오")] [SerializeField] private Mario _mario;
 
-        public Vector3 GetStartPos => _startPoint.position;
-        
+        private Camera _mainCamera;
+        private Vector3 _startCamPos;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _mainCamera = Camera.main;
+            _startCamPos = _mainCamera.transform.position;
+        }
+
         public void RespawnMario()
         {
             if (--_marioHp <= 0)
@@ -21,11 +29,8 @@ namespace _0.Scripts.SuperMario
                 return;
             }
 
-            if (_mario.TryGetComponent<Rigidbody2D>(out var rigidbody2D))
-            {
-                rigidbody2D.velocity = Vector2.zero;
-                rigidbody2D.simulated = true;
-            }
+            _mainCamera.transform.position = _startCamPos;
+            _mario.transform.position = _startPoint.position;
             
         }
     }

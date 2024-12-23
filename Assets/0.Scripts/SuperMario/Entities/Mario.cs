@@ -53,7 +53,7 @@ namespace _0.Scripts.SuperMario
 
             // 횡이동
             var isMove = HorizontalMove(velocity);
-            _animator.SetBool(AnimationMoveKey, isMove);
+            _animator.SetBool(AnimationMoveKey, isMove && !_isJumping);
             
             // 점프
             if (Input.GetKey(KeyCode.Space))
@@ -113,6 +113,7 @@ namespace _0.Scripts.SuperMario
             _rigidbody.AddRelativeForce(new Vector2(0f, _jumpPower), ForceMode2D.Impulse);
             SoundManager.Instance.PlayEffect("SuperMario_Jump");
             _animator.SetBool(AnimationJumpKey, true);
+            _animator.SetBool(AnimationMoveKey, false);
 
         }
 
@@ -126,25 +127,34 @@ namespace _0.Scripts.SuperMario
             
             _animator.Play("Dead",0,0f);
             
-            _rigidbody.simulated = false;
             _rigidbody.velocity = Vector2.zero;
+            _rigidbody.simulated = false;
             _collider.enabled = false;
         }
 
-        private void ResetPosition()
+        /// <summary>
+        /// 위치 세팅
+        /// </summary>
+        private void Respawn()
         {
-            var startPos = SuperMarioGameManager.Instance.GetStartPos;
-            transform.position = startPos;
+            SuperMarioGameManager.Instance.RespawnMario();
         }
 
+        /// <summary>
+        /// 다시 움직일 수 있게끔 세팅
+        /// </summary>
         private void SetPlayable()
         {
             _collider.enabled = true;
             _animator.SetBool(AnimationDeadKey, false);
-            SuperMarioGameManager.Instance.RespawnMario();
             _isInteractable = true;
+            _rigidbody.simulated = true;
         }
 
+        /// <summary>
+        /// 화면 밖으로 못나가게 설정
+        /// </summary>
+        /// <returns></returns>
         private bool CheckMoveInCamera()
         {
             var viewportPoint = _mainCamera.WorldToViewportPoint(_rigidbody.position);
