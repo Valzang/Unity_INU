@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
 namespace _0.Scripts.Dodge
@@ -41,14 +40,22 @@ namespace _0.Scripts.Dodge
             var curBulletPos = transform.position;
             var curPlayerPos = DodgePlayer.Instance.transform.position;
     
+            //플레이어 방향으로 향하는 정규화된 벡터
             var targetGuidedVec = (Vector2)(curPlayerPos - curBulletPos).normalized;
             
             var deltaTime = Time.fixedDeltaTime;
+            
+            // x축 단위 벡터와 타겟 정규화 벡터 사이의 벡터로 선형 보간
             var nextDir = Vector2.Lerp(transform.right, targetGuidedVec, _rotationSpeed * deltaTime).normalized;
+            
+            // 해당 방향에 속도를 곱해서 다음 위치 정해주기
             Vector3 nextPos = transform.position += (Vector3)nextDir * (_speed * deltaTime);
+            
+            // 아크탄젠트로 각도 구하고 Radian => Degree 변경
             float angle = Mathf.Atan2(nextDir.y, nextDir.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle);
 
+            // 화면 안에 있는지, 플레이어 위치와 동일해졌는지 체크
             if (IsInCamera(nextPos) && Vector2.SqrMagnitude(curPlayerPos - nextPos) > 0.01f)
             {
                 return;

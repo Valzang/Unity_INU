@@ -65,6 +65,26 @@ public class DodgePlayer : Singleton<DodgePlayer>
             return;
         }
 
+        // 화면 밖을 벗어났는 지 체크 후 벗어났으면 안쪽으로 강제 이동
+        if (CheckMoveInCamera())
+        {
+            return;
+        }
+
+        var newPos = new Vector2(_horizontalValue, _verticalValue);
+
+        if (newPos.magnitude > 1f)
+        {
+            newPos = newPos.normalized;
+        }
+
+        _rigidbody.MovePosition(_rigidbody.position + newPos * (_speed * Time.fixedDeltaTime));
+        _horizontalValue = 0f;
+        _verticalValue = 0f;
+    }
+    
+    private bool CheckMoveInCamera()
+    {
         var viewportPoint = _mainCamera.WorldToViewportPoint(_rigidbody.position);
 
         bool needToReset = false;
@@ -90,21 +110,9 @@ public class DodgePlayer : Singleton<DodgePlayer>
             needToReset = true;
         }
 
-        if (needToReset)
-        {
-            _rigidbody.position = _mainCamera.ViewportToWorldPoint(viewportPoint);
-            return;
-        }
+        if (!needToReset) return false;
+        _rigidbody.position = _mainCamera.ViewportToWorldPoint(viewportPoint);
+        return true;
 
-        var newPos = new Vector2(_horizontalValue, _verticalValue);
-
-        if (newPos.magnitude > 1f)
-        {
-            newPos = newPos.normalized;
-        }
-
-        _rigidbody.MovePosition(_rigidbody.position + newPos * (_speed * Time.fixedDeltaTime));
-        _horizontalValue = 0f;
-        _verticalValue = 0f;
     }
 }
