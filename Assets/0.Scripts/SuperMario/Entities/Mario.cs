@@ -1,4 +1,6 @@
-﻿using _0.Scripts.Utility;
+﻿using System;
+using _0.Scripts.SuperMario.Blocks;
+using _0.Scripts.Utility;
 using UnityEngine;
 
 namespace _0.Scripts.SuperMario
@@ -10,6 +12,7 @@ namespace _0.Scripts.SuperMario
 
         private Camera _mainCamera;
         private bool _isJumping = false;
+        private bool _isBig = false;
         
         
         private int _obstacleLayer = -1;
@@ -35,16 +38,17 @@ namespace _0.Scripts.SuperMario
         private readonly string AnimationMoveKey = "IsMove";
         private readonly string AnimationJumpKey = "IsJump";
         private readonly string AnimationDeadKey = "Dead";
+
+        private bool _wasJumping = false;
         private void FixedUpdate()
         {
             if (!_isInteractable) return;
             var velocity = _rigidbody.velocity;
-            var wasJumping = _isJumping;
-            _isJumping = velocity.y is < -float.Epsilon or > float.Epsilon;
 
             // 점프해서 바닥에 닿는 순간 마찰력으로 인해 속도 감소되는 부분 수정
-            if (wasJumping && !_isJumping)
+            if (!_isJumping && _wasJumping && velocity.y is >= -float.Epsilon and <= float.Epsilon)
             {
+                _wasJumping = false;
                 velocity.x = _prevSpeedX;
                 _rigidbody.velocity = velocity;
                 _animator.SetBool(AnimationJumpKey, false);
@@ -110,6 +114,9 @@ namespace _0.Scripts.SuperMario
         private void Jump()
         {
             if (_isJumping) return;
+            _isJumping = true;
+            _wasJumping = true;
+            _rigidbody.velocity = new(_rigidbody.velocity.x, 0f);
             _rigidbody.AddRelativeForce(new Vector2(0f, _jumpPower), ForceMode2D.Impulse);
             SoundManager.Instance.PlayEffect("SuperMario_Jump");
             _animator.SetBool(AnimationJumpKey, true);
@@ -181,6 +188,30 @@ namespace _0.Scripts.SuperMario
 
         }
 
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!_isInteractable) return;
+            var velocity = _rigidbody.velocity;
+            if (other.gameObject.layer == _obstacleLayer)
+            {
+                _animator.SetBool(AnimationJumpKey, false);
+
+                // 점프해서 바닥에 닿는 순간 마찰력으로 인해 속도 감소되는 부분 수정
+                velocity.x = _prevSpeedX;
+                _rigidbody.velocity = velocity;
+                _isJumping = false;
+                return;
+            }
+
+            if (other.gameObject.layer != _enemyLayer) return;
+            if (_isJumping)
+            {
+                velocity.y = 0f;
+                _rigidbody.velocity = velocity;
+                _rigidbody.AddRelativeForce(new Vector2(0f, _jumpPower*0.8f), ForceMode2D.Impulse);
+            }
+        }
+
 
         protected void OnCollisionEnter2D(Collision2D other)
         {
@@ -188,14 +219,24 @@ namespace _0.Scripts.SuperMario
             if(other.gameObject.layer == _obstacleLayer)
             {
                 var contactPoint = other.GetContact(0).point;
-                if (contactPoint.y < transform.position.y)
+                if (!(contactPoint.y >= transform.position.y)) return;
+                
+                if (other.transform.TryGetComponent<InteractableBlock>(out var itemBlock))
                 {
-                    _animator.SetBool(AnimationJumpKey, false);
-                    var velocity = _rigidbody.velocity;
-
-                    // 점프해서 바닥에 닿는 순간 마찰력으로 인해 속도 감소되는 부분 수정
-                    velocity.x = _prevSpeedX;
-                    _rigidbody.velocity = velocity;
+                    itemBlock.React();
+                    //TODO 바운스하고 전환 후 아이템 주기
+                }
+                else if (other.transform.TryGetComponent<ObstacleBlock>(out var block))
+                {
+                    //block.React();
+                    if (_isBig)
+                    {
+                        //TODO 부수기
+                    }
+                    else
+                    {
+                        // 바운스만 시키기
+                    }
                 }
 
                 return;
@@ -205,11 +246,7 @@ namespace _0.Scripts.SuperMario
             {
                 var contactPoint = other.GetContact(0).point;
                 // 적이 밟히는 상황이면
-                if (_isJumping && contactPoint.y < transform.position.y)
-                {
-                    _rigidbody.AddRelativeForce(new Vector2(0f, _jumpPower*0.8f), ForceMode2D.Impulse);
-                }
-                else
+                if (!_isJumping || contactPoint.y >= transform.position.y)
                 {
                     GetDamage();
                 }
