@@ -41,7 +41,8 @@ namespace _0.Scripts.Utility
         /// 특정 파일 이름을 가진 BGM 실행
         /// </summary>
         /// <param name="fileName"></param>
-        public void PlayBGM(string fileName)
+        /// <param name="startTime"></param>
+        public void PlayBGM(string fileName, float startTime = 0f)
         {
             if (_bgmDict is not { Count: > 0 }) return;
             if (_bgmDict.TryGetValue(fileName, out var clip))
@@ -56,11 +57,22 @@ namespace _0.Scripts.Utility
                 _bgmPlayer.clip = clip;
                 _bgmPlayer.loop = true;
                 _bgmPlayer.Play();
+                _bgmPlayer.time = startTime;
             }
             else
             {
                 Debug.LogWarning($"{fileName}이라는 이름의 BGM이 없습니다.");
             }
+        }
+
+        public void StopBGM()
+        {
+            _bgmPlayer.Stop();
+        }
+
+        public float GetCurrentBgmTime()
+        {
+            return _bgmPlayer.clip != null ? _bgmPlayer.time : 0f;
         }
 
         /// <summary>
@@ -78,6 +90,11 @@ namespace _0.Scripts.Utility
             {
                 Debug.LogWarning($"{fileName}이라는 이름의 BGM이 없습니다.");
             }
+        }
+
+        public void SetMuteBgm(bool isActive)
+        {
+            _bgmPlayer.mute = isActive;
         }
     }
 }

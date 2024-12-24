@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using _0.Scripts.SuperMario.Blocks;
 using _0.Scripts.Utility;
 using UnityEngine;
@@ -9,34 +9,22 @@ namespace _0.Scripts.SuperMario
     {
         [Header("점프 파워")] [SerializeField] [Range(0f,100f)] private float _jumpPower = 10f;
         [Header("최대 이동속도")] [SerializeField] private float _maxSpeed = 4f;
+        [Header("무적 마리오")] [SerializeField] private SpriteRenderer _invincibleMario;
 
         private Camera _mainCamera;
         private bool _isJumping = false;
         private bool _isBig = false;
         
-        
-        private int _obstacleLayer = -1;
-        private int _enemyLayer    = -1;
-        
         protected override void Awake()
         {
             base.Awake();
             _mainCamera = Camera.main;
-
-            if (_obstacleLayer == -1)
-            {
-                _obstacleLayer = LayerMask.NameToLayer(Obstacle);
-            }
-
-            if (_enemyLayer == -1)
-            {
-                _enemyLayer = LayerMask.NameToLayer(Enemy);
-            }
+            _invincibleMario.gameObject.SetActive(false);
+            SoundManager.Instance.PlayBGM("SuperMario BGM", _prevBgmTiming);
         }
 
         private float _prevSpeedX = 0f;
         private readonly string AnimationMoveKey = "IsMove";
-        private readonly string AnimationJumpKey = "IsJump";
         private readonly string AnimationDeadKey = "Dead";
 
         private bool _wasJumping = false;
@@ -51,13 +39,14 @@ namespace _0.Scripts.SuperMario
                 _wasJumping = false;
                 velocity.x = _prevSpeedX;
                 _rigidbody.velocity = velocity;
-                _animator.SetBool(AnimationJumpKey, false);
             }
             _prevSpeedX = 0f;
 
             // 횡이동
             var isMove = HorizontalMove(velocity);
-            _animator.SetBool(AnimationMoveKey, isMove && !_isJumping);
+            var newMoveValue = isMove && !_isJumping;
+            if(_animator.GetBool(AnimationMoveKey) != newMoveValue)
+                _animator.SetBool(AnimationMoveKey, newMoveValue);
             
             // 점프
             if (Input.GetKey(KeyCode.Space))
@@ -78,7 +67,7 @@ namespace _0.Scripts.SuperMario
                 _rigidbody.velocity = velocity;
                 if (!_spriteRenderer.flipX)
                 {
-                    _spriteRenderer.flipX = true;
+                    _spriteRenderer.flipX = _invincibleMario.flipX = true;
                 }
 
                 isMove = true;
@@ -97,7 +86,7 @@ namespace _0.Scripts.SuperMario
                 _rigidbody.velocity = velocity;
                 if (_spriteRenderer.flipX)
                 {
-                    _spriteRenderer.flipX = false;
+                    _spriteRenderer.flipX = _invincibleMario.flipX = false;
                 }
                 isMove = true;
             }
@@ -119,18 +108,21 @@ namespace _0.Scripts.SuperMario
             _rigidbody.velocity = new(_rigidbody.velocity.x, 0f);
             _rigidbody.AddRelativeForce(new Vector2(0f, _jumpPower), ForceMode2D.Impulse);
             SoundManager.Instance.PlayEffect("SuperMario_Jump");
-            _animator.SetBool(AnimationJumpKey, true);
-            _animator.SetBool(AnimationMoveKey, false);
+            _animator.Play("Jump",0,0f);
+            
+            if(_animator.GetBool(AnimationMoveKey))
+                _animator.SetBool(AnimationMoveKey, false);
 
         }
 
         private bool _isInteractable = true;
-        protected override void GetDamage()
+        protected virtual void GetDamage()
         {
+            if (_isInvincible) return;
+            SoundManager.Instance.StopBGM();
             SoundManager.Instance.PlayEffect("SuperMario_Dead");
             _isInteractable = false;
             _animator.SetBool(AnimationMoveKey, false);
-            _animator.SetBool(AnimationJumpKey, false);
             
             _animator.Play("Dead",0,0f);
             
@@ -156,6 +148,7 @@ namespace _0.Scripts.SuperMario
             _animator.SetBool(AnimationDeadKey, false);
             _isInteractable = true;
             _rigidbody.simulated = true;
+            SoundManager.Instance.PlayBGM("SuperMario BGM", _prevBgmTiming);
         }
 
         /// <summary>
@@ -188,18 +181,20 @@ namespace _0.Scripts.SuperMario
 
         }
 
+        #region #충돌 처리 ===============================================
+
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!_isInteractable) return;
             var velocity = _rigidbody.velocity;
             if (other.gameObject.layer == _obstacleLayer)
             {
-                _animator.SetBool(AnimationJumpKey, false);
-
                 // 점프해서 바닥에 닿는 순간 마찰력으로 인해 속도 감소되는 부분 수정
                 velocity.x = _prevSpeedX;
                 _rigidbody.velocity = velocity;
                 _isJumping = false;
+                _animator.Play("Idle",0,0f);
                 return;
             }
 
@@ -211,7 +206,6 @@ namespace _0.Scripts.SuperMario
                 _rigidbody.AddRelativeForce(new Vector2(0f, _jumpPower*0.8f), ForceMode2D.Impulse);
             }
         }
-
 
         protected void OnCollisionEnter2D(Collision2D other)
         {
@@ -245,12 +239,56 @@ namespace _0.Scripts.SuperMario
             if(other.gameObject.layer == _enemyLayer)
             {
                 var contactPoint = other.GetContact(0).point;
-                // 적이 밟히는 상황이면
-                if (!_isJumping || contactPoint.y >= transform.position.y)
+                if (other.transform.TryGetComponent<Enemy>(out var enemy)
+                    && (_isInvincible || _isJumping && contactPoint.y < transform.position.y))
+                {
+                    enemy.GetDamage();
+                }
+                else
                 {
                     GetDamage();
                 }
+                
             }
+        }
+
+        #endregion #충돌 처리 ===============================================
+
+
+        private bool _isInvincible = false;
+        private float _prevBgmTiming = 0f;
+
+        /// <summary>
+        /// 마리오 무적
+        /// </summary>
+        public void SetInvincible()
+        {
+            _isInvincible = true;
+            _invincibleMario.gameObject.SetActive(true);
+            StartCoroutine(InvincibleCoroutine());
+            //TODO 배경음 변경
+            _prevBgmTiming = SoundManager.Instance.GetCurrentBgmTime();
+            Debug.Log($"중간 시간 : {_prevBgmTiming}");
+            SoundManager.Instance.PlayBGM("SuperMario_Invincible");
+        }
+
+        IEnumerator InvincibleCoroutine()
+        {
+            yield return new WaitForSeconds(10f);
+            DeactivateInvincible();
+        }
+        
+        /// <summary>
+        /// 마리오 무적해제
+        /// </summary>
+        public void DeactivateInvincible()
+        {
+            StopCoroutine(InvincibleCoroutine());
+            _isInvincible = false;
+            _invincibleMario.gameObject.SetActive(false);
+            Debug.Log($"재개 시간 : {_prevBgmTiming}");
+            SoundManager.Instance.PlayBGM("SuperMario BGM", _prevBgmTiming);
+            _prevBgmTiming = 0f;
         }
     }
 }

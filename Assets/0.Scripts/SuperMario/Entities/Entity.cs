@@ -17,14 +17,24 @@ namespace _0.Scripts.SuperMario
         protected const string Obstacle = "Obstacle";
         protected const string Enemy = "Enemy";
         
+        protected int _obstacleLayer = -1;
+        protected int _enemyLayer    = -1;
+        
         
         protected virtual void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _collider = GetComponent<BoxCollider2D>();
             _animator = GetComponent<Animator>();
-        }
+            if (_obstacleLayer == -1)
+            {
+                _obstacleLayer = LayerMask.NameToLayer(Obstacle);
+            }
 
-        protected abstract void GetDamage();
+            if (_enemyLayer == -1)
+            {
+                _enemyLayer = LayerMask.NameToLayer(Enemy);
+            }
+        }
     }
 }
