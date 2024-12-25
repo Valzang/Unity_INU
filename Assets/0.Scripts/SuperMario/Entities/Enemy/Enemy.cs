@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _0.Scripts.SuperMario
 {
@@ -9,12 +8,25 @@ namespace _0.Scripts.SuperMario
 
         protected Vector2 _moveVector = new(-1f, 0f);
         protected Camera _mainCamera;
+
+        protected Vector3 _startPos;
+
+        public virtual void ResetEnemy()
+        {
+            _mainCamera ??= Camera.main;
+            _moveVector = new Vector2(_isLeftMove ? -_moveSpeed : _moveSpeed, 0f);
+            transform.position = _startPos;
+            _rigidbody.velocity = _moveVector;
+            _rigidbody.simulated = true;
+            _spriteRenderer.flipX = _isLeftMove;
+            _isEntered = false;
+            _isFirst = true;
+            gameObject.SetActive(true);
+        }
         protected void Start()
         {
-            _mainCamera = Camera.main;
-            _moveVector = new Vector2(_isLeftMove ? -_moveSpeed : _moveSpeed, 0f);
-            _rigidbody.velocity = _moveVector;
-            _spriteRenderer.flipX = _isLeftMove;
+            _startPos = transform.position;
+            ResetEnemy();
         }
 
         protected void FixedUpdate()
@@ -22,6 +34,8 @@ namespace _0.Scripts.SuperMario
             _rigidbody.velocity = _moveVector;
             CheckMoveInCamera();
         }
+
+        private bool _isEntered = false;
         
         protected virtual bool CheckMoveInCamera()
         {
@@ -40,8 +54,17 @@ namespace _0.Scripts.SuperMario
                 needToDestroy = true;
             }
 
-            if (!needToDestroy) return false;
-            Destroy(gameObject);
+            if (!needToDestroy)
+            {
+                _isEntered = true;
+                return false;
+            }
+            if(_isEntered)
+            {
+                _rigidbody.simulated = false;
+                _rigidbody.velocity = Vector2.zero;
+                gameObject.SetActive(false);
+            }
             return true;
 
         }

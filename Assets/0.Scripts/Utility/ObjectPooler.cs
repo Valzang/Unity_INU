@@ -9,8 +9,7 @@ namespace _0.Scripts.Utility
     {
         [Header("프리팹")] [SerializeField] protected T _prefab;
         [Header("생성될 상위 부모")] [SerializeField] protected Transform _parent;
-        //[Header("생성 한계수")] [SerializeField] [Range(2, 50000)] 
-        protected uint _limitCount;
+        [Header("생성 한계수")] [SerializeField] [Range(2, 50000)] protected uint _limitCount;
 
         protected Queue<T> _poolQueue;
         protected List<T> _activePools;

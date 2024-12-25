@@ -194,6 +194,7 @@ namespace _0.Scripts.SuperMario
                 velocity.x = _prevSpeedX;
                 _rigidbody.velocity = velocity;
                 _isJumping = false;
+                _isTasking = false;
                 _animator.Play("Idle",0,0f);
                 return;
             }
@@ -204,21 +205,35 @@ namespace _0.Scripts.SuperMario
                 velocity.y = 0f;
                 _rigidbody.velocity = velocity;
                 _rigidbody.AddRelativeForce(new Vector2(0f, _jumpPower*0.8f), ForceMode2D.Impulse);
+                if (other.transform.TryGetComponent<Enemy>(out var enemy) && (_isInvincible || _isJumping))
+                {
+                    enemy.GetDamage();
+                }
             }
         }
 
+        private bool _isTasking = false;
         protected void OnCollisionEnter2D(Collision2D other)
         {
             if (!_isInteractable) return;
+            // var contact = other.GetContact(0);
+            // var contactSides = contact.normal;
+            var contactPoint = other.GetContact(0).point;
+            var bounds = other.collider.bounds;
+            var middlePoint = bounds.center.x;
+            var halfWidth = bounds.extents.x;
+            var quarterWidth = halfWidth * 0.5f;
+            
             if(other.gameObject.layer == _obstacleLayer)
             {
-                var contactPoint = other.GetContact(0).point;
-                if (!(contactPoint.y >= transform.position.y)) return;
+                if (_isTasking || contactPoint.y > other.transform.position.y
+                               || middlePoint-halfWidth > contactPoint.x 
+                               || contactPoint.x > middlePoint + halfWidth) return;
+                _isTasking = true;
                 
                 if (other.transform.TryGetComponent<InteractableBlock>(out var itemBlock))
                 {
                     itemBlock.React();
-                    //TODO 바운스하고 전환 후 아이템 주기
                 }
                 else if (other.transform.TryGetComponent<ObstacleBlock>(out var block))
                 {
@@ -236,19 +251,23 @@ namespace _0.Scripts.SuperMario
                 return;
             }
 
-            if(other.gameObject.layer == _enemyLayer)
+            if (other.gameObject.layer != _enemyLayer) return;
+            
+            if (_isInvincible && other.transform.TryGetComponent<Enemy>(out var enemy))
             {
-                var contactPoint = other.GetContact(0).point;
-                if (other.transform.TryGetComponent<Enemy>(out var enemy)
-                    && (_isInvincible || _isJumping && contactPoint.y < transform.position.y))
-                {
-                    enemy.GetDamage();
-                }
-                else
-                {
-                    GetDamage();
-                }
-                
+                enemy.GetDamage();
+                return;
+            }
+            
+           
+
+            if (contactPoint.x > middlePoint + quarterWidth || contactPoint.x < middlePoint - quarterWidth)
+            {
+                GetDamage();
+            }
+            else
+            {
+                Debug.Log($"부딪힌 지점 : {contactPoint}, 박스 중심 : {middlePoint}, 반지름 : {quarterWidth*2f}");
             }
         }
 
@@ -266,9 +285,7 @@ namespace _0.Scripts.SuperMario
             _isInvincible = true;
             _invincibleMario.gameObject.SetActive(true);
             StartCoroutine(InvincibleCoroutine());
-            //TODO 배경음 변경
             _prevBgmTiming = SoundManager.Instance.GetCurrentBgmTime();
-            Debug.Log($"중간 시간 : {_prevBgmTiming}");
             SoundManager.Instance.PlayBGM("SuperMario_Invincible");
         }
 
@@ -286,7 +303,6 @@ namespace _0.Scripts.SuperMario
             StopCoroutine(InvincibleCoroutine());
             _isInvincible = false;
             _invincibleMario.gameObject.SetActive(false);
-            Debug.Log($"재개 시간 : {_prevBgmTiming}");
             SoundManager.Instance.PlayBGM("SuperMario BGM", _prevBgmTiming);
             _prevBgmTiming = 0f;
         }

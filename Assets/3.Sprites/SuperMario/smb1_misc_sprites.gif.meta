@@ -1184,9 +1184,9 @@ TextureImporter:
       name: smb1_misc_sprites_62
       rect:
         serializedVersion: 2
-        x: 461
+        x: 459
         y: 1093
-        width: 4
+        width: 8
         height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1349,132 +1349,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: smb1_misc_sprites_70
-      rect:
-        serializedVersion: 2
-        x: 427
-        y: 1059
-        width: 11
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d27277071cce49e48a8dd1584c171bde
-      internalID: 960432132
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_71
-      rect:
-        serializedVersion: 2
-        x: 439
-        y: 1074
-        width: 10
-        height: 15
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 18b0d5ba4ecea6e43b8f21c3bf6f8ec0
-      internalID: 400081493
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_72
-      rect:
-        serializedVersion: 2
-        x: 451
-        y: 1075
-        width: 10
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 078c27428c498154c9d760deef9622a0
-      internalID: 1421940554
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_73
-      rect:
-        serializedVersion: 2
-        x: 462
-        y: 1080
-        width: 6
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b8773b5bf2b99e346bc939c993715fa4
-      internalID: 1693639335
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_74
-      rect:
-        serializedVersion: 2
-        x: 470
-        y: 1080
-        width: 5
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f92b381d28a700742b99dd4ab8666166
-      internalID: 760849704
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_75
-      rect:
-        serializedVersion: 2
-        x: 477
-        y: 1080
-        width: 5
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6052bd779fbe4084c9ab585de68e8363
-      internalID: -1431693179
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: smb1_misc_sprites_76
       rect:
         serializedVersion: 2
@@ -1580,111 +1454,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: smb1_misc_sprites_81
-      rect:
-        serializedVersion: 2
-        x: 439
-        y: 1059
-        width: 10
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e9db651f29917c74b83c30d5da804a82
-      internalID: 1900857070
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_82
-      rect:
-        serializedVersion: 2
-        x: 451
-        y: 1059
-        width: 10
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4821c104ac864214cb5adbe3c95ae149
-      internalID: 1099606926
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_83
-      rect:
-        serializedVersion: 2
-        x: 463
-        y: 1069
-        width: 5
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f0905308357015b4f8952c8197301e43
-      internalID: -1668941270
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_84
-      rect:
-        serializedVersion: 2
-        x: 470
-        y: 1069
-        width: 5
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f5b78eaf4196b6f4186cb4b9a2f2774b
-      internalID: -874990856
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_85
-      rect:
-        serializedVersion: 2
-        x: 477
-        y: 1069
-        width: 5
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7736a703aca2bfd4ba8ccfcb36148fee
-      internalID: -1317898675
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: smb1_misc_sprites_86
       rect:
         serializedVersion: 2
@@ -1727,69 +1496,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: smb1_misc_sprites_88
-      rect:
-        serializedVersion: 2
-        x: 463
-        y: 1058
-        width: 5
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f12eceee81fe21a4dba5b2652550a6b7
-      internalID: -1021134504
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_89
-      rect:
-        serializedVersion: 2
-        x: 470
-        y: 1056
-        width: 6
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2f1c3b875a6052e48904340ac3d55b8d
-      internalID: -820991421
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_90
-      rect:
-        serializedVersion: 2
-        x: 477
-        y: 1056
-        width: 6
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e6322fbb2f0eb7f479c08c68c22dfeba
-      internalID: -172491509
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: smb1_misc_sprites_93
       rect:
         serializedVersion: 2
@@ -1806,69 +1512,6 @@ TextureImporter:
       bones: []
       spriteID: bce1de555e6698f4ea20e4b7725503ea
       internalID: -607291589
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_94
-      rect:
-        serializedVersion: 2
-        x: 427
-        y: 1043
-        width: 10
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 62069f06de42ca047ad910771cdde9a0
-      internalID: -7334207
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_95
-      rect:
-        serializedVersion: 2
-        x: 439
-        y: 1043
-        width: 11
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 487615197f0f22741a3b3d3c4d40bee5
-      internalID: 645283162
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smb1_misc_sprites_96
-      rect:
-        serializedVersion: 2
-        x: 452
-        y: 1043
-        width: 11
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dfd32dcde6574144d8a22781af5a2469
-      internalID: 956985332
       vertices: []
       indices: 
       edges: []
@@ -10332,6 +9975,48 @@ TextureImporter:
       bones: []
       spriteID: 8eb99dce8b319e747b06d1b869ad1565
       internalID: 2140849080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smb1_misc_sprites_31
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 1093
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 211bca8a173891f49be034fc7a2b1a63
+      internalID: -452784129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smb1_misc_sprites_40
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 1093
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5feca1d5bc968734eb9bc82955c5d22d
+      internalID: -1640080486
       vertices: []
       indices: 
       edges: []

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace _0.Scripts.SuperMario
 {
@@ -8,30 +9,23 @@ namespace _0.Scripts.SuperMario
         {
             if (other.gameObject.layer == _obstacleLayer)
             {
-                var firstContact = other.GetContact(0);
-                var currentObjectPointX = transform.position.x;
+                var contact = other.GetContact(0);
+                var contactSides = contact.normal;
 
+                if (contactSides.y is > 0.1f or < -0.1f) return;
                 if (_isLeftMove)
                 {
-                    if (firstContact.point.x < currentObjectPointX)
-                    {
-                        _isLeftMove = false;
-                        _moveVector.x *= -1f;
-                        _spriteRenderer.flipX = !_spriteRenderer.flipX;
-                    }
+                    _isLeftMove = false;
+                    _moveVector.x *= -1f;
+                    _spriteRenderer.flipX = !_spriteRenderer.flipX;
                 }
-                else if (firstContact.point.x > currentObjectPointX)
+                else
                 {
                     _isLeftMove = true;
                     _moveVector.x *= -1f;
                     _spriteRenderer.flipX = !_spriteRenderer.flipX;
                 }
 
-                var velocity = _moveVector;
-                // 점프해서 바닥에 닿는 순간 마찰력으로 인해 속도 감소되는 부분 수정
-                velocity.y = 0f;
-                _rigidbody.velocity = velocity;
-                _rigidbody.AddRelativeForce(new Vector2(0f, 3.5f), ForceMode2D.Impulse);
                 return;
             }
             
@@ -40,6 +34,15 @@ namespace _0.Scripts.SuperMario
                 mario.SetInvincible();
                 Destroy(gameObject);
             }
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            var velocity = _moveVector;
+            // 점프해서 바닥에 닿는 순간 마찰력으로 인해 속도 감소되는 부분 수정
+            velocity.y = 0f;
+            _rigidbody.velocity = velocity;
+            _rigidbody.AddRelativeForce(new Vector2(0f, 3.5f), ForceMode2D.Impulse);
         }
     }
 }
