@@ -1,6 +1,5 @@
 ﻿using System;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _0.Scripts.SuperMario.Blocks
@@ -21,14 +20,17 @@ namespace _0.Scripts.SuperMario.Blocks
         [Header("스프라이트 렌더러")] [SerializeField] private SpriteRenderer _spriteRenderer;
 
         [Header("무적 별 프리팹")] [SerializeField] private InvincibleStar _starPrefab;
+        [Header("버섯 프리팹")] [SerializeField] private PowerUpMushroom _mushroomPrefab;
         
         protected Animator _animator;
         protected BoxCollider2D _collider;
         
-        protected void Awake()
+        protected override void Awake()
         {
             _collider = GetComponent<BoxCollider2D>();
             _animator = GetComponent<Animator>();
+            _isInteractable = true;
+            _multipleCoinCount = 0;
             if (_blockType == BlockType.MultipleCoin)
             {
                 _spriteRenderer.sprite = _normalBlockSprite;
@@ -53,24 +55,39 @@ namespace _0.Scripts.SuperMario.Blocks
                 case BlockType.Coin:
                 {
                     //TODO 동전 이미지 소환
+                    if (CoinPool.Instance.TryGetItem(out var coin))
+                    {
+                        var spawnPos = transform.position;
+                        spawnPos.y += _collider.size.y * 1.5f;
+                        coin.transform.position = spawnPos;
+                        coin.gameObject.SetActive(true);
+                        coin.Bounce();
+                        Bounce();
+                    }
                     SetNoneInteractable();
                     break;
                 }
                 case BlockType.PowerUp:
                 {
-                    //TODO 버섯 소환
+                    var mushroomInstance = Instantiate(_mushroomPrefab.gameObject);
+                    var spawnPos = transform.position;
+                    spawnPos.y += _collider.size.y * 1.5f;
+                    mushroomInstance.transform.position = spawnPos;
+                    var mushroom = mushroomInstance.GetComponent<PowerUpMushroom>();
+                    mushroom.Show();
+                    Bounce();
                     SetNoneInteractable();
                     break;
                 }
                 case BlockType.Invincible:
                 {
-                    //TODO 별 소환
                     var starInstance = Instantiate(_starPrefab.gameObject);
                     var spawnPos = transform.position;
-                    spawnPos.y += _collider.size.y;
+                    spawnPos.y += _collider.size.y * 1.5f;
                     starInstance.transform.position = spawnPos;
                     var star = starInstance.GetComponent<InvincibleStar>();
                     star.Show();
+                    Bounce();
                     SetNoneInteractable();
                     break;
                 }
@@ -82,16 +99,35 @@ namespace _0.Scripts.SuperMario.Blocks
                     }
                     else
                     {
-                        _spriteRenderer.transform.DOPunchPosition(Vector3.up*0.1f, 0.4f, 1);
+                        if (CoinPool.Instance.TryGetItem(out var coin))
+                        {
+                            var spawnPos = transform.position;
+                            //spawnPos.y += _collider.size.y * 1.5f;
+                            coin.transform.position = spawnPos;
+                            coin.gameObject.SetActive(true);
+                            coin.Bounce();
+                        }
+
+                        Bounce();
                     }
                     break;
                 }
             }
         }
 
+        private Tween _bounceTween = null;
+        private void Bounce()
+        {
+            _bounceTween?.Kill(true);
+            _bounceTween = null;
+            _bounceTween = _spriteRenderer.transform
+                                .DOPunchPosition(Vector3.up*0.1f, 0.4f, 1)
+                                .OnComplete(()=>_spriteRenderer.transform.localPosition = Vector3.zero)
+                                .SetAutoKill(true);
+        }
+
         private void SetNoneInteractable()
         {
-            _spriteRenderer.transform.DOPunchPosition(Vector3.up*0.1f, 0.4f, 1);
             _animator.Play("Idle",0,0f);
             _animator.Rebind();
             _isInteractable = false;
