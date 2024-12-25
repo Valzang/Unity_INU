@@ -393,6 +393,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MushroomBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 7794801742811730091, guid: 75a9ae59c29cc0a418c7f9261ee00d61, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -506,6 +510,10 @@ PrefabInstance:
     - target: {fileID: 1769006109927339195, guid: 21c8cb4b070405246a65872b9f2b5a50, type: 3}
       propertyPath: m_Name
       value: MultipleCoinBlock
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133195432085571740, guid: 21c8cb4b070405246a65872b9f2b5a50, type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -987,10 +995,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8875137285967080381, guid: ebfc33c7b2aa5604ea7d42bac84c090e, type: 3}
-      propertyPath: m_Size.y
-      value: 0.16
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1051,6 +1055,14 @@ PrefabInstance:
     - target: {fileID: 8048237497783657987, guid: 0244dfdc2a14d5c49b62c39bf79ed633, type: 3}
       propertyPath: _mushroomPrefab
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678141162282010662, guid: 0244dfdc2a14d5c49b62c39bf79ed633, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678141162282010662, guid: 0244dfdc2a14d5c49b62c39bf79ed633, type: 3}
+      propertyPath: m_UsedByComposite
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

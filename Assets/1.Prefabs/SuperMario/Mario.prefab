@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 1667994906814350696}
   - component: {fileID: 8622640747344720495}
   - component: {fileID: 7845097090981229246}
-  - component: {fileID: 8875137285967080381}
+  - component: {fileID: 9005210663408532301}
   m_Layer: 7
   m_Name: Mario
   m_TagString: Untagged
@@ -187,8 +187,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &8875137285967080381
-BoxCollider2D:
+--- !u!70 &9005210663408532301
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -220,18 +220,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.13, y: 0.16}
-    newSize: {x: 0.13, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.12, y: 0.145}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.12, y: 0.16}
+  m_Direction: 0
 --- !u!1 &6631238920820672965
 GameObject:
   m_ObjectHideFlags: 0
