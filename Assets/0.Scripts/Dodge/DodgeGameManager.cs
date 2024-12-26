@@ -5,7 +5,6 @@ using _0.Scripts.Dodge.UI;
 using _0.Scripts.Utility;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace _0.Scripts.Dodge
@@ -43,6 +42,9 @@ namespace _0.Scripts.Dodge
             _screenHalfHeight = (_bulletArea.Max(x => x.position.y) - _bulletArea.Min(x => x.position.y)) * 0.5f;
         }
 
+        /// <summary>
+        /// 첫 시작에 앞서 미리 값들 초기화
+        /// </summary>
         public void Initialize()
         {
             Time.timeScale = 1f;
